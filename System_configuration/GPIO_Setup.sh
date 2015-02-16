@@ -37,3 +37,11 @@ if [ ! -e /usr/local/lib/python2.7/dist-packages/spidev.so ]; then
     python setup.py install
     cd ${PWD}
 fi
+
+#Freeing the Serial Port
+
+#ISSUE: regex test is nor working, investigate how to valide a string status
+#sed '$s/\(.*\)/#\1/' /etc/inittab
+
+apt-get install python-serial
+apt-get install minicom
