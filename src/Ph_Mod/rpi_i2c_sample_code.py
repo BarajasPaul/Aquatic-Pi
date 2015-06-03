@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import io # used to create file streams
 import fcntl # used to access I2C parameters like addresses
-
+import sys, getopt
 import time # used for sleep delay and timestamps
 import string # helps parse strings
 
@@ -67,16 +67,8 @@ class atlas_i2c:
 def main():
     device = atlas_i2c() # creates the I2C port object, specify the address or bus if necessary
     
-    print(">> Atlas Scientific sample code")
-    print(">> Any commands entered are passed to the board via I2C except:")
-    print(">> Address,xx changes the I2C address the Raspberry Pi communicates with.") 
-    print(">> Poll,xx.x command continuously polls the board every xx.x seconds")
-    print(" where xx.x is longer than the %0.2f second timeout." %  atlas_i2c.long_timeout)
-    print(" Pressing ctrl-c will stop the polling")
-    
-    # main loop
     while True:
-        input = raw_input("Enter command: ")
+        input = str(sys.argv[1])
         
         # address command lets you change which address the Raspberry Pi will poll
         if(input.upper().startswith("ADDRESS")):
@@ -107,7 +99,6 @@ def main():
         # if not a special keyword, pass commands straight to board
         else:
             print(device.query(input))
-        
         
         
 if __name__ == '__main__':
