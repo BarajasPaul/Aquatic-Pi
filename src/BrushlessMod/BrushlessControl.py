@@ -1,9 +1,13 @@
 import RPi.GPIO as GPIO
 import time
+import sys
+import os.path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+import GPIO_PORT
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(26,GPIO.OUT)
-p = GPIO.PWM(26,50)
+GPIO.setup(GPIO_PORT.BRUSHLESS_LEFT_PWM,GPIO.OUT)
+p = GPIO.PWM(GPIO_PORT.BRUSHLESS_LEFT_PWM,50)
 p.start(4)
 test=4
 time.sleep(2)
