@@ -14,7 +14,7 @@ cv2.namedWindow(winName, cv2.CV_WINDOW_AUTOSIZE)
 t_minus = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
 t = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
 t_plus = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
-iterador=0
+iterator=0
 while True:
     # Read next image
     t_minus = t
@@ -31,7 +31,7 @@ while True:
     x= thresh2.shape[1]
     ix=0
     iy=0
-    contadorpixwhite=0
+    countpixelswhite=0
     while iy<y:
         ix=0
         while ix<x:
@@ -39,15 +39,15 @@ while True:
             pixel= thresh1[iy,ix]
             #print "pixel"+str(pixel)
             if pixel != 0:
-                contadorpixwhite=contadorpixwhite+1
+                countpixelswhite=countpixelswhite+1
             ix=ix+1
             #time.sleep(.01)
         iy=iy+1
 
-    print "pixeles = "+str(contadorpixwhite)
-    if contadorpixwhite>300:
-        cv2.imwrite("movimiento"+str(iterador)+".png",t_pluscolor) 
-        iterador=iterador+1
+    print "pixels = "+str(countpixelswhite)
+    if countpixelswhite>300:
+        #cv2.imwrite("move"+str(iterator)+".png",t_pluscolor) to observe image processing 
+        iterator=iterator+1
     cv2.imshow( winName, thresh2)
     key = cv2.waitKey(10)
     if key == 27:
