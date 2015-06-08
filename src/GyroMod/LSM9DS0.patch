@@ -1,0 +1,108 @@
+diff --git a/Linux/RTIMULibDrive/RTIMULibDrive.cpp b/Linux/RTIMULibDrive/RTIMULibDrive.cpp
+index 994472b..41a7dd5 100644
+--- a/Linux/RTIMULibDrive/RTIMULibDrive.cpp
++++ b/Linux/RTIMULibDrive/RTIMULibDrive.cpp
+@@ -79,7 +79,7 @@ int main()
+             //  display 10 times per second
+ 
+             if ((now - displayTimer) > 100000) {
+-                printf("Sample rate %d: %s\r", sampleRate, RTMath::displayDegrees("", imuData.fusionPose));
++                printf("%s\r", RTMath::displayDegrees("", imuData.fusionPose));
+                 fflush(stdout);
+                 displayTimer = now;
+             }
+diff --git a/RTIMULib/IMUDrivers/RTIMU.cpp b/RTIMULib/IMUDrivers/RTIMU.cpp
+index 5ee0fc3..d2333a8 100644
+--- a/RTIMULib/IMUDrivers/RTIMU.cpp
++++ b/RTIMULib/IMUDrivers/RTIMU.cpp
+@@ -145,7 +145,6 @@ RTIMU::RTIMU(RTIMUSettings *settings)
+         m_fusion = new RTFusion();
+         break;
+     }
+-    HAL_INFO1("Using fusion algorithm %s\n", RTFusion::fusionName(m_settings->m_fusionType));
+ }
+ 
+ RTIMU::~RTIMU()
+@@ -181,20 +180,14 @@ void RTIMU::setCalibrationData()
+ 
+     if (m_settings->m_compassCalValid) {
+         HAL_INFO("Using min/max compass calibration\n");
+-    } else {
+-        HAL_INFO("min/max compass calibration not in use\n");
+     }
+ 
+     if (m_settings->m_compassCalEllipsoidValid) {
+         HAL_INFO("Using ellipsoid compass calibration\n");
+-    } else {
+-        HAL_INFO("Ellipsoid compass calibration not in use\n");
+     }
+ 
+     if (m_settings->m_accelCalValid) {
+         HAL_INFO("Using accel calibration\n");
+-    } else {
+-        HAL_INFO("Accel calibration not in use\n");
+     }
+ }
+ 
+diff --git a/RTIMULib/IMUDrivers/RTIMULSM9DS0.cpp b/RTIMULib/IMUDrivers/RTIMULSM9DS0.cpp
+index 761ac6f..90aaa3f 100644
+--- a/RTIMULib/IMUDrivers/RTIMULSM9DS0.cpp
++++ b/RTIMULib/IMUDrivers/RTIMULSM9DS0.cpp
+@@ -138,7 +138,6 @@ bool RTIMULSM9DS0::IMUInit()
+ 
+     gyroBiasInit();
+ 
+-    HAL_INFO("LSM9DS0 init complete\n");
+     return true;
+ }
+ 
+diff --git a/RTIMULib/RTIMUSettings.cpp b/RTIMULib/RTIMUSettings.cpp
+index 089191f..5be0c05 100644
+--- a/RTIMULib/RTIMUSettings.cpp
++++ b/RTIMULib/RTIMUSettings.cpp
+@@ -138,7 +138,6 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
+                         imuType = RTIMU_TYPE_LSM9DS0;
+                         slaveAddress = LSM9DS0_GYRO_ADDRESS0;
+                         busIsI2C = true;
+-                        HAL_INFO("Detected LSM9DS0 at standard/standard address\n");
+                         return true;
+                     }
+                 }
+@@ -147,7 +146,6 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
+                         imuType = RTIMU_TYPE_LSM9DS0;
+                         slaveAddress = LSM9DS0_GYRO_ADDRESS0;
+                         busIsI2C = true;
+-                        HAL_INFO("Detected LSM9DS0 at standard/option address\n");
+                         return true;
+                     }
+                 }
+@@ -187,7 +185,7 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
+                         imuType = RTIMU_TYPE_LSM9DS0;
+                         slaveAddress = LSM9DS0_GYRO_ADDRESS1;
+                         busIsI2C = true;
+-                        HAL_INFO("Detected LSM9DS0 at option/option address\n");
++                     //   HAL_INFO("Detected LSM9DS0 at option/option address\n");
+                         return true;
+                     }
+                 }
+@@ -480,7 +478,6 @@ bool RTIMUSettings::loadSettings()
+     //  check to see if settings file exists
+ 
+     if (!(m_fd = fopen(m_filename, "r"))) {
+-        HAL_INFO("Settings file not found. Using defaults and creating settings file\n");
+         return saveSettings();
+     }
+ 
+diff --git a/RTIMULib/RTMath.cpp b/RTIMULib/RTMath.cpp
+index 72a9ab1..4b13bd0 100644
+--- a/RTIMULib/RTMath.cpp
++++ b/RTIMULib/RTMath.cpp
+@@ -51,7 +51,7 @@ const char *RTMath::displayRadians(const char *label, RTVector3& vec)
+ 
+ const char *RTMath::displayDegrees(const char *label, RTVector3& vec)
+ {
+-    sprintf(m_string, "%s: roll:%f, pitch:%f, yaw:%f", label, vec.x() * RTMATH_RAD_TO_DEGREE,
++    sprintf(m_string, "%sroll:%f, pitch:%f, yaw:%f", label, vec.x() * RTMATH_RAD_TO_DEGREE,
+             vec.y() * RTMATH_RAD_TO_DEGREE, vec.z() * RTMATH_RAD_TO_DEGREE);
+     return m_string;
+ }
