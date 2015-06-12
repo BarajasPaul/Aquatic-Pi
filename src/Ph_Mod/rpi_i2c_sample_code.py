@@ -8,7 +8,11 @@ import string # helps parse strings
 
 class atlas_i2c:
     long_timeout = 1.5 # the timeout needed to query readings and calibrations
+<<<<<<< HEAD
+    short_timeout = .5 # timeout for regular commands
+=======
     short_timeout = .3 # timeout for regular commands
+>>>>>>> ee359abc8f4433701d3c50dc3e79e612c13f480b
     default_bus = 1 # the default bus for I2C on the newer Raspberry Pis, certain older boards use bus 0
     default_address = 99 # the default address for the pH sensor
     
@@ -55,6 +59,11 @@ class atlas_i2c:
         if((string.upper().startswith("R")) or 
            (string.upper().startswith("CAL"))):
             time.sleep(self.long_timeout)
+<<<<<<< HEAD
+        elif((string.upper().startswith("SLEEP"))):
+            return "sleep mode"
+=======
+>>>>>>> ee359abc8f4433701d3c50dc3e79e612c13f480b
         else:
             time.sleep(self.short_timeout)
             
@@ -98,7 +107,14 @@ def main():
         
         # if not a special keyword, pass commands straight to board
         else:
+<<<<<<< HEAD
+            try:
+                print(device.query(input))
+            except IOError:
+                print("Query Failed")
+=======
             print(device.query(input))
+>>>>>>> ee359abc8f4433701d3c50dc3e79e612c13f480b
         
         
 if __name__ == '__main__':
