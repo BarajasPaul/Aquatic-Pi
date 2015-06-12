@@ -8,7 +8,11 @@ import string # helps parse strings
 
 class atlas_i2c:
     long_timeout = 1.5 # the timeout needed to query readings and calibrations
+<<<<<<< HEAD
+    short_timeout = .5 # timeout for regular commands
+=======
     short_timeout = .3 # timeout for regular commands
+>>>>>>> bd4393fc427f9d6dc885391ccfd3265dc6ef526a
     default_bus = 1 # the default bus for I2C on the newer Raspberry Pis, certain older boards use bus 0
     default_address = 97 # the default address for the Oxygen sensor
     
@@ -55,6 +59,11 @@ class atlas_i2c:
         if((string.upper().startswith("R")) or 
            (string.upper().startswith("CAL"))):
             time.sleep(self.long_timeout)
+<<<<<<< HEAD
+        elif((string.upper().startswith("SLEEP"))):
+            return "sleep mode"
+=======
+>>>>>>> bd4393fc427f9d6dc885391ccfd3265dc6ef526a
         else:
             time.sleep(self.short_timeout)
             
@@ -98,7 +107,14 @@ def main():
         
         # if not a special keyword, pass commands straight to board
         else:
+<<<<<<< HEAD
+            try:
+                print(device.query(input))
+            except IOError:
+                print("Query Failed")
+=======
             print(device.query(input))
+>>>>>>> bd4393fc427f9d6dc885391ccfd3265dc6ef526a
         break
         
 if __name__ == '__main__':
