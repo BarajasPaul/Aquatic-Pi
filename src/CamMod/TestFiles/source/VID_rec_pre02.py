@@ -1,11 +1,12 @@
 import cv2
+import numpy as np
 import time
 def diffImg(t0, t1, t2):
   d1 = cv2.absdiff(t2, t1)
   d2 = cv2.absdiff(t1, t0)
   return cv2.bitwise_and(d1, d2)
 
-cam = cv2.VideoCapture(1)
+cam = cv2.VideoCapture(0)
 
 winName = "Movement Indicator"
 cv2.namedWindow(winName, cv2.CV_WINDOW_AUTOSIZE)
@@ -26,7 +27,7 @@ while True:
     #result=cv2.bitwise_and(result,t_pluscolor)
     ret,thresh1 = cv2.threshold(result,10,255,cv2.THRESH_BINARY)
     #cv2.imshow( winName, thresh1)
-    thresh2=cv2.pyrDown(cv2.pyrDown(cv2.pyrDown(thresh1)))
+    thresh2=cv2.pyrDown(cv2.pyrDown(cv2.pyrDown(cv2.pyrDown(thresh1))))
     y= thresh2.shape[0]
     x= thresh2.shape[1]
     ix=0
@@ -36,7 +37,7 @@ while True:
         ix=0
         while ix<x:
             #print str(ix)+" "+str(x)+"x"+" "+str(iy)+" "+str(y)+"y"
-            pixel= thresh1[iy,ix]
+            pixel= thresh1.item(iy,ix)
             #print "pixel"+str(pixel)
             if pixel != 0:
                 countpixelswhite=countpixelswhite+1
