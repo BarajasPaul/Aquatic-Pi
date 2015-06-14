@@ -8,13 +8,9 @@ import string # helps parse strings
 
 class atlas_i2c:
     long_timeout = 1.5 # the timeout needed to query readings and calibrations
-<<<<<<< HEAD
     short_timeout = .5 # timeout for regular commands
-=======
-    short_timeout = .3 # timeout for regular commands
->>>>>>> ee359abc8f4433701d3c50dc3e79e612c13f480b
     default_bus = 1 # the default bus for I2C on the newer Raspberry Pis, certain older boards use bus 0
-    default_address = 99 # the default address for the pH sensor
+    default_address = 99 # the default address for the PH sensor
     
     def __init__(self, address = default_address, bus = default_bus):
         # open two file streams, one for reading and one for writing
@@ -59,11 +55,8 @@ class atlas_i2c:
         if((string.upper().startswith("R")) or 
            (string.upper().startswith("CAL"))):
             time.sleep(self.long_timeout)
-<<<<<<< HEAD
         elif((string.upper().startswith("SLEEP"))):
             return "sleep mode"
-=======
->>>>>>> ee359abc8f4433701d3c50dc3e79e612c13f480b
         else:
             time.sleep(self.short_timeout)
             
@@ -76,9 +69,9 @@ class atlas_i2c:
 def main():
     device = atlas_i2c() # creates the I2C port object, specify the address or bus if necessary
     
+    # main loop
     while True:
         input = str(sys.argv[1])
-        
         # address command lets you change which address the Raspberry Pi will poll
         if(input.upper().startswith("ADDRESS")):
             addr = int(string.split(input, ',')[1])
@@ -107,16 +100,12 @@ def main():
         
         # if not a special keyword, pass commands straight to board
         else:
-<<<<<<< HEAD
             try:
                 print(device.query(input))
             except IOError:
                 print("Query Failed")
-=======
             print(device.query(input))
->>>>>>> ee359abc8f4433701d3c50dc3e79e612c13f480b
-        
-        
+        break
+
 if __name__ == '__main__':
     main()
-
