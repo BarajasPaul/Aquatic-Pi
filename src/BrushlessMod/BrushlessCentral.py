@@ -14,12 +14,12 @@ GPIO.setup(GPIO_PORT.BRUSHLESS_CENTRAL_PWM,GPIO.OUT)
 p = GPIO.PWM(GPIO_PORT.BRUSHLESS_LEFT_PWM,50)
 p.start(4)
 time.sleep(2)
-DutyCycleValue=4.5+(TimeCounter*.4)
+DutyCycleValue=4.8+(TimeCounter*.4)
 try:
     while True:
         p.ChangeDutyCycle(DutyCycleValue)
         time.sleep(2)
-        if DutyCycleValue == int(8.0):
+        if DutyCycleValue > int(6.4):
             p.stop()
             GPIO.cleanup()
             exit()
