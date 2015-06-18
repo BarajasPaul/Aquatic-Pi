@@ -13,15 +13,12 @@ do
     kill -9 $PID
     kill -9 $CBRUSHPID
     sleep 1s
-    if [ kill -0 $CBRUSHPID ]
-    {
-        kill -9 $CBRUSHPID   
-    }
-    if [ kill -0 $PID ]
-    {
-        kill-9$PID
-    }
+    if [ kill -0 $CBRUSHPID ];then
+        kill -9 $CBRUSHPID
+    fi
+    if [ kill -0 $PID ]; then
+        kill-9 $PID
+    fi
     echo -en "......>>>>$ICOUNTER"
     ICOUNTER=$((ICOUNTER+1))
-
 done
