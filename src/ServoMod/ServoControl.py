@@ -28,9 +28,13 @@ setServo(0)
 time.sleep(2)
 limit=180
 while True:
-    for angle in range(0, limit):
+    for angle in range(0,limit):
         setServo(angle)
         time.sleep(delay_period)
-    for angle in range(0, limit):
+        if angle == 179:
+            os.system("../SonarMod/mb7092Analog_Module.py "+ str(180))
+    for angle in range(0,limit):
         setServo(limit - angle)
         time.sleep(delay_period)
+        if (limit-angle)==1:
+            os.system("../SonarMod/mb7092Analog_Module.py "+ str(0))
