@@ -17,6 +17,7 @@ http://www.raspberrypi.org/documentation/installation/installing-images/README.m
 
 
 First step
+
     -enable ssh connection(You will need it if you don't have HDMI Monitor)
     -enable camera hardware( For development purpose )
     -enable I2c, spi and UART( GPIO control )
